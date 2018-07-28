@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native'
+import { View, Text, FlatList, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import { getDecks } from '../actions'
 import { _getDecksApi } from '../utils/api'
+import { styles } from '../utils/styles'
 import { AppLoading } from 'expo'
-import { white, gray } from '../utils/colors'
+// import Deck from './Deck'
 
 class Decks extends Component {
   state = {
@@ -18,13 +19,19 @@ class Decks extends Component {
       .then(() => this.setState(() => ({ready: true})))
   }
 
+  openDeck (id) {
+    console.log(id)
+  }
+
   renderItem = (item) => {
     const deck = item.item
     return (
-      <View style={styles.deckItem}>
-        <Text style={styles.deckTitle}>{ deck.title }</Text>
-        <Text style={styles.deckCardsCount}>{deck.questions.length} cards</Text>
-      </View>
+      <TouchableOpacity onPress={this.openDeck(item.title)}>
+        <View style={styles.deckItem}>
+          <Text style={styles.deckTitle}>{ deck.title }</Text>
+          <Text style={styles.deckCardsCount}>{deck.questions.length} cards</Text>
+        </View>
+      </TouchableOpacity>
     )
   }
 
@@ -35,9 +42,8 @@ class Decks extends Component {
     if (ready === false) {
       return <AppLoading />
     }
-
     return (
-      <View style={styles.container}>
+      <View style={styles.decksContainer}>
         { arrayOfDecks.length > 0 &&
           <FlatList
             data={arrayOfDecks}
@@ -49,28 +55,6 @@ class Decks extends Component {
     )
   }
 }
-
-const styles = StyleSheet.create({
-  container:  {
-    justifyContent: 'center',
-  },
-  deckItem: {
-    backgroundColor: white,
-    padding: 50,
-    borderBottomWidth: 1,
-    flex: 1
-  },
-  deckTitle: {
-    textAlign: 'center',
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  deckCardsCount: {
-    textAlign: 'center',
-    fontSize: 16,
-    color: gray,
-  }
-})
 
 function mapStateToProps (decks) {
   const keys = Object.keys(decks)

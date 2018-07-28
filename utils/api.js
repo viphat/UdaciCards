@@ -33,11 +33,25 @@ const dummyData = {
   English: { title: 'English', questions: [ ] }
 }
 
+function setDummyData() {
+  AsyncStorage.setItem(CARDS_STORAGE_KEY, JSON.stringify(dummyData))
+  return dummyData
+}
+
 export function _getDecksApi() {
   return AsyncStorage.getItem(CARDS_STORAGE_KEY)
     .then((results) => {
       return results === null
-        ? dummyData
+        ? setDummyData()
         : results
+    })
+}
+
+export function _getDeckApi(id) {
+  return AsyncStorage.getItem(CARDS_STORAGE_KEY)
+    .then((results) => {
+      return results[id] === undefined
+        ? { }
+        : results[id]
     })
 }
