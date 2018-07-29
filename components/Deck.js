@@ -1,12 +1,10 @@
 // import React, { Component } from 'react'
 // import { View, Text, TouchableOpacity } from 'react-native'
-// import { connect } from 'react-redux'
-// import { getDeck } from '../actions'
 // import { _getDeckApi } from '../utils/api'
 // import { styles } from '../utils/styles'
 // import { AppLoading } from 'expo'
 
-// class Deck extends Component {
+// export default class Deck extends Component {
 //   state = {
 //     ready: false,
 //   }
@@ -27,5 +25,3 @@
 //     )
 //   }
 // }
-
-// export default connect()(Deck)

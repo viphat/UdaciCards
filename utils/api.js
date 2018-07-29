@@ -43,7 +43,7 @@ export function _getDecksApi() {
     .then((results) => {
       return results === null
         ? setDummyData()
-        : results
+        : JSON.parse(results)
     })
 }
 

@@ -1,32 +1,34 @@
 import React, { Component } from 'react'
 import { View, Text, FlatList, TouchableOpacity } from 'react-native'
-import { connect } from 'react-redux'
-import { getDecks } from '../actions'
 import { _getDecksApi } from '../utils/api'
 import { styles } from '../utils/styles'
 import { AppLoading } from 'expo'
-// import Deck from './Deck'
+import { _ } from 'lodash'
 
-class Decks extends Component {
+export default class Decks extends Component {
   state = {
     ready: false,
+    decks: []
   }
 
   componentDidMount() {
-    const { dispatch } = this.props
     _getDecksApi()
-      .then((decks) => dispatch(getDecks(decks)))
-      .then(() => this.setState(() => ({ready: true})))
+      .then((decks) => {
+        this.setState(() => ({
+          decks: decks,
+          ready: true
+        }))
+      })
   }
 
-  openDeck (id) {
+  openDeck = (id) => {
     console.log(id)
   }
 
   renderItem = (item) => {
     const deck = item.item
     return (
-      <TouchableOpacity onPress={this.openDeck(item.title)}>
+      <TouchableOpacity onPress={() => this.openDeck(deck.id)}>
         <View style={styles.deckItem}>
           <Text style={styles.deckTitle}>{ deck.title }</Text>
           <Text style={styles.deckCardsCount}>{deck.questions.length} cards</Text>
@@ -35,18 +37,22 @@ class Decks extends Component {
     )
   }
 
-  render () {
-    const { arrayOfDecks } = this.props
-    const { ready } = this.state
+  mapDecksToArray = (decks) => {
+    const keys = Object.keys(decks)
+    return keys.map((key) => _.merge(decks[key], {id: key}))
+  }
 
+  render () {
+    const { ready, decks } = this.state
     if (ready === false) {
       return <AppLoading />
     }
+    const arrayDecks = this.mapDecksToArray(decks)
     return (
       <View style={styles.decksContainer}>
-        { arrayOfDecks.length > 0 &&
+        { arrayDecks.length > 0 &&
           <FlatList
-            data={arrayOfDecks}
+            data={arrayDecks}
             renderItem={this.renderItem}
             keyExtractor={(item, index) => index.toString()}
           />
@@ -55,13 +61,3 @@ class Decks extends Component {
     )
   }
 }
-
-function mapStateToProps (decks) {
-  const keys = Object.keys(decks)
-  const arrayOfDecks = keys.map((key) => decks[key])
-  return {
-    arrayOfDecks
-  }
-}
-
-export default connect(mapStateToProps)(Decks)
