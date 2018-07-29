@@ -38,7 +38,7 @@ function setDummyData() {
   return dummyData
 }
 
-export function _getDecksApi() {
+export function getDecks() {
   return AsyncStorage.getItem(CARDS_STORAGE_KEY)
     .then((results) => {
       return results === null
@@ -47,7 +47,7 @@ export function _getDecksApi() {
     })
 }
 
-export function _getDeckApi(id) {
+export function getDeck(id) {
   return AsyncStorage.getItem(CARDS_STORAGE_KEY)
     .then((results) => {
       results = JSON.parse(results)
@@ -55,4 +55,10 @@ export function _getDeckApi(id) {
         ? { }
         : results[id]
     })
+}
+
+export function addDeck({deck, key}) {
+  return AsyncStorage.mergeItem(CARDS_STORAGE_KEY, JSON.stringify({
+    [key]: deck,
+  }))
 }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
-import { _getDeckApi } from '../utils/api'
+import { getDeck } from '../utils/api'
 import { styles } from '../utils/styles'
 import { AppLoading } from 'expo'
 import UdaciButton from './UdaciButton'
@@ -32,7 +32,7 @@ export default class Deck extends Component {
     const { navigation } = this.props
     const deckId = navigation.getParam('deckId')
 
-    _getDeckApi(deckId)
+    getDeck(deckId)
       .then((deck) => {
         this.setState(() => ({
           deck,

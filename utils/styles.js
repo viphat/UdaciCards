@@ -4,6 +4,20 @@ import { white, gray } from './colors'
 export const styles = StyleSheet.create({
   mainContainer:  {
     justifyContent: 'center',
+    flex: 1,
+  },
+  addDeckContainer: {
+    backgroundColor: white,
+    justifyContent: 'space-around',
+    padding: 50,
+    flex: 1
+  },
+  addDeckTitle: {
+    fontSize: 36,
+  },
+  addDeckTextInput: {
+    borderBottomWidth: 1,
+    paddingBottom: 10,
   },
   deckItem: {
     backgroundColor: white,

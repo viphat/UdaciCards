@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, FlatList, TouchableOpacity } from 'react-native'
-import { _getDecksApi } from '../utils/api'
+import { getDecks } from '../utils/api'
 import { styles } from '../utils/styles'
 import { AppLoading } from 'expo'
 import { _ } from 'lodash'
@@ -11,14 +11,25 @@ export default class Decks extends Component {
     decks: []
   }
 
-  componentDidMount() {
-    _getDecksApi()
+  getAllDecks() {
+    getDecks()
       .then((decks) => {
         this.setState(() => ({
           decks: decks,
           ready: true
         }))
       })
+  }
+
+  componentDidMount() {
+    this.props.navigation.addListener(
+      'didFocus',
+      () => {
+        this.getAllDecks()
+      }
+    )
+
+    this.getAllDecks()
   }
 
   openDeck = (id) => {

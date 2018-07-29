@@ -76,7 +76,6 @@ const RootStack = createStackNavigator(
 
 export default class App extends React.Component {
   render() {
-    AsyncStorage.clear()
     return (
       <View style={{ flex: 1 }}>
         <UdaciStatusBar backgroundColor={purple} barStyle='light-content' />
