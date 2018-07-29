@@ -22,7 +22,7 @@ export default class Decks extends Component {
   }
 
   openDeck = (id) => {
-    console.log(id)
+    this.props.navigation.navigate('DeckDetails', { deckId: id })
   }
 
   renderItem = (item) => {
@@ -49,7 +49,7 @@ export default class Decks extends Component {
     }
     const arrayDecks = this.mapDecksToArray(decks)
     return (
-      <View style={styles.decksContainer}>
+      <View style={styles.mainContainer}>
         { arrayDecks.length > 0 &&
           <FlatList
             data={arrayDecks}

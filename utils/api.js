@@ -50,6 +50,7 @@ export function _getDecksApi() {
 export function _getDeckApi(id) {
   return AsyncStorage.getItem(CARDS_STORAGE_KEY)
     .then((results) => {
+      results = JSON.parse(results)
       return results[id] === undefined
         ? { }
         : results[id]
