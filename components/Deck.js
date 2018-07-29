@@ -7,6 +7,12 @@ import UdaciButton from './UdaciButton'
 import { orange } from '../utils/colors'
 
 export default class Deck extends Component {
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: navigation.getParam('deckId')
+    }
+  }
+
   state = {
     ready: false,
     deck: { }
