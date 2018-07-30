@@ -18,9 +18,10 @@ export default class Deck extends Component {
     deck: { }
   }
 
-  addCard () {
-    //TODO
-    console.log('Add Card')
+  addCard = () => {
+    const { navigation } = this.props
+    const deckId = navigation.getParam('deckId')
+    navigation.navigate('AddCard', { deckId: deckId })
   }
 
   startQuiz () {
@@ -28,10 +29,7 @@ export default class Deck extends Component {
     console.log('Start Quiz')
   }
 
-  componentDidMount() {
-    const { navigation } = this.props
-    const deckId = navigation.getParam('deckId')
-
+  loadData (deckId) {
     getDeck(deckId)
       .then((deck) => {
         this.setState(() => ({
@@ -39,6 +37,20 @@ export default class Deck extends Component {
           ready: true
         }))
       })
+  }
+
+  componentDidMount() {
+    const { navigation } = this.props
+    const deckId = navigation.getParam('deckId')
+
+    navigation.addListener(
+      'didFocus',
+      () => {
+        this.loadData(deckId)
+      }
+    )
+
+    this.loadData(deckId)
   }
 
   render () {

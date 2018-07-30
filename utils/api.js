@@ -62,3 +62,16 @@ export function addDeck({deck, key}) {
     [key]: deck,
   }))
 }
+
+export function addCard({key, question, answer}) {
+  return AsyncStorage.getItem(CARDS_STORAGE_KEY)
+    .then((results) => {
+      const data = JSON.parse(results)
+      data[key].questions = data[key].questions || []
+      data[key].questions.push({
+        question,
+        answer
+      });
+      AsyncStorage.setItem(CARDS_STORAGE_KEY, JSON.stringify(data))
+    })
+}

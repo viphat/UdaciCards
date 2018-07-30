@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     flex: 1,
   },
-  addDeckContainer: {
+  addContainer: {
     backgroundColor: white,
     justifyContent: 'space-around',
     padding: 50,
@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
   addDeckTitle: {
     fontSize: 36,
   },
-  addDeckTextInput: {
+  addTextInput: {
     borderBottomWidth: 1,
     paddingBottom: 10,
   },

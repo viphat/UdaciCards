@@ -11,7 +11,7 @@ export default class Decks extends Component {
     decks: []
   }
 
-  getAllDecks() {
+  loadData() {
     getDecks()
       .then((decks) => {
         this.setState(() => ({
@@ -25,11 +25,11 @@ export default class Decks extends Component {
     this.props.navigation.addListener(
       'didFocus',
       () => {
-        this.getAllDecks()
+        this.loadData()
       }
     )
 
-    this.getAllDecks()
+    this.loadData()
   }
 
   openDeck = (id) => {

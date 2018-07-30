@@ -5,6 +5,7 @@ import { Constants } from 'expo'
 import Deck from './components/Deck'
 import Decks from './components/Decks'
 import AddDeck from './components/AddDeck'
+import AddCard from './components/AddCard'
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation'
 
 function UdaciStatusBar ( { backgroundColor, ...props }) {
@@ -48,26 +49,27 @@ const MainTabsNavigator = createBottomTabNavigator({
   }
 })
 
+const stackNavigationOptions = {
+  headerTintColor: white,
+  headerStyle: {
+    backgroundColor: purple,
+  },
+}
+
 const RootStack = createStackNavigator(
   {
     Home: {
       screen: MainTabsNavigator,
-      navigationOptions: {
-        headerTintColor: white,
-        headerStyle: {
-          backgroundColor: purple,
-        },
-      },
+      navigationOptions: stackNavigationOptions,
     },
     DeckDetails: {
       screen: Deck,
-      navigationOptions: {
-        headerTintColor: white,
-        headerStyle: {
-          backgroundColor: purple,
-        },
-      },
+      navigationOptions: stackNavigationOptions,
     },
+    AddCard: {
+      screen: AddCard,
+      navigationOptions: stackNavigationOptions,
+    }
   },
   {
     initialRouteName: 'Home',

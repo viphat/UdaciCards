@@ -42,12 +42,12 @@ export default class AddDeck extends Component {
 
   render () {
     return (
-      <View style={styles.addDeckContainer}>
+      <View style={styles.addContainer}>
         <Text style={styles.addDeckTitle}>
           What is the title of your new deck?
         </Text>
         <TextInput
-          style={styles.addDeckTextInput}
+          style={styles.addTextInput}
           onChangeText={(text) => this.setState({ title: text })}
           value={this.state.title}
         />
