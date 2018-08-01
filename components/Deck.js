@@ -28,7 +28,7 @@ export default class Deck extends Component {
     // To be implemented
     const { navigation } = this.props
     const { deck } = this.state
-    console.log(deck)
+
     navigation.navigate('QuizView', { deck: deck })
   }
 

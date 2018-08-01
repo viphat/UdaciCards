@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { white, gray } from './colors'
+import { white, gray, red } from './colors'
 
 export const styles = StyleSheet.create({
   mainContainer:  {
@@ -9,6 +9,18 @@ export const styles = StyleSheet.create({
   quizContainer: {
     justifyContent: 'space-around',
     flex: 1,
+  },
+  resultsContainer: {
+    flex: 2,
+    justifyContent: 'center',
+    padding: 50,
+  },
+  resultsContent: {
+    fontSize: 36,
+    color: red,
+  },
+  quizContent: {
+    fontSize: 36,
   },
   quizCountContainer: {
     flex: 1,
@@ -25,9 +37,6 @@ export const styles = StyleSheet.create({
     marginBottom: 20,
     justifyContent: 'flex-end',
     flex: 2,
-  },
-  quizContent: {
-    fontSize: 36,
   },
   quizAnswerContainer: {
     flex: 2,

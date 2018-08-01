@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import { styles } from '../utils/styles'
 import UdaciButton from './UdaciButton'
 import { red, green } from '../utils/colors'
@@ -13,34 +13,99 @@ export default class QuizView extends Component {
 
   state = {
     questions: [],
-    currentQuestion: null,
     currentQuestionIndex: 0,
     showAnswer: false,
-    answeredQuestionsCount: 0,
+    isFinish: false,
+    correctAnswersCount: 0,
+    incorrectAnswersCount: 0,
+  }
+
+  toHome = () => {
+    const { navigation } = this.props
+    navigation.navigate('Home')
   }
 
   answer = (result) => {
-    console.log(result)
+    const { questions, currentQuestionIndex } = this.state
+
+    this.setState((previousState) => ({
+      correctAnswersCount:
+        previousState.correctAnswersCount + (result === 'correct' ? 1 : 0),
+      incorrectAnswersCount:
+        previousState.incorrectAnswersCount + (result === 'incorrect' ? 1 : 0),
+    }))
+
+    if (currentQuestionIndex + 1 === questions.length) {
+      // Finish Quiz if it's the last question.
+      this.setState(() => ({ isFinish: true }))
+    } else {
+      // Show Next Question Screen
+      this.setState((previousState) => ({
+        currentQuestionIndex: previousState.currentQuestionIndex + 1,
+        showAnswer: false,
+      }))
+    }
   }
 
   componentDidMount () {
     const { navigation } = this.props
-    const { deck, questionIndex } = navigation.state.params
+
+    const {
+      deck, questionIndex
+    } = navigation.state.params
+
     const currentQuestionIndex = questionIndex || 0
 
     this.setState(() => ({
       questions: deck.questions,
       currentQuestion: deck.questions[currentQuestionIndex],
-      currentQuestionIndex: currentQuestionIndex
+      currentQuestionIndex: currentQuestionIndex,
+      correctAnswersCount: this.state.correctAnswersCount || 0,
+      incorrectAnswersCount: this.state.incorrectAnswersCount || 0,
     }))
   }
 
   render () {
-    const { questions, currentQuestion, showAnswer, answeredQuestionsCount } = this.state
-    if (currentQuestion === null) {
+    const {
+      questions,
+      showAnswer,
+      currentQuestionIndex,
+      correctAnswersCount,
+      incorrectAnswersCount,
+      isFinish,
+    } = this.state
+
+    const currentQuestion = questions[currentQuestionIndex]
+
+    if (currentQuestion === undefined || currentQuestion === null) {
       return (
         <View style={styles.quizContainer}>
-          <Text style={styles.quizContent}>Something went wrong!!!</Text>
+          <View style={styles.resultsContainer}>
+            <Text style={styles.resultsContent}>
+              Something went wrong!!!
+            </Text>
+          </View>
+        </View>
+      )
+    }
+
+    if (isFinish === true) {
+      const correctPercent = Math.round((correctAnswersCount / questions.length) * 100.0)
+      return (
+        <View style={styles.quizContainer}>
+          <View style={styles.resultsContainer}>
+            <Text style={styles.resultsContent}>
+              Congratulations, You did exactly {correctPercent}%
+            </Text>
+          </View>
+          <View style={styles.quizButtons}>
+            <UdaciButton
+              btnStyle={{backgroundColor: green}}
+              onPress={this.toHome}
+            >
+              <Text>Go Home</Text>
+            </UdaciButton>
+          </View>
         </View>
       )
     }
@@ -49,7 +114,7 @@ export default class QuizView extends Component {
       <View style={styles.quizContainer}>
         <View style={styles.quizCountContainer}>
           <Text style={styles.quizCountContent}>
-            { questions.length - answeredQuestionsCount } / { questions.length }
+            { questions.length - (correctAnswersCount + incorrectAnswersCount) } / { questions.length }
           </Text>
         </View>
         <View style={styles.quizContentContainer}>
@@ -57,7 +122,9 @@ export default class QuizView extends Component {
         </View>
         <View style={styles.quizAnswerContainer}>
           { showAnswer === false
-              ? <Text style={[styles.quizAnswer, { color: red }]}>Answer</Text>
+              ? <TouchableOpacity onPress={() => this.setState(() => ({ showAnswer: true }))}>
+                  <Text style={[styles.quizAnswer, { color: red }]}>Answer</Text>
+                </TouchableOpacity>
               : <Text style={styles.quizAnswer}>{ currentQuestion.answer }</Text>
           }
         </View>
