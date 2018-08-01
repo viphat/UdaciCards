@@ -36,15 +36,15 @@ export const styles = StyleSheet.create({
     paddingRight: 20,
     marginBottom: 20,
     justifyContent: 'flex-end',
-    flex: 2,
+    flex: 1,
   },
-  quizAnswerContainer: {
-    flex: 2,
+  quizLinkContainer: {
+    flex: 1,
     paddingLeft: 20,
     paddingRight: 20,
     alignItems: 'center',
   },
-  quizAnswer: {
+  quizLink: {
     fontSize: 28,
   },
   quizButtons: {

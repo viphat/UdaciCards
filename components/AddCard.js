@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, TextInput, Text } from 'react-native'
+import { KeyboardAvoidingView, TextInput, Text } from 'react-native'
 import { styles } from '../utils/styles'
 import { addCard } from '../utils/api'
 import UdaciButton from './UdaciButton'
@@ -35,7 +35,10 @@ export default class AddCard extends Component {
 
   render () {
     return (
-      <View style={styles.addContainer}>
+      <KeyboardAvoidingView
+        style={styles.addContainer}
+        behavior="padding" enabled
+      >
         <TextInput
           style={styles.addTextInput}
           placeholder='Question'
@@ -51,9 +54,9 @@ export default class AddCard extends Component {
         <UdaciButton
           onPress={this.submit}
         >
-          <Text>Create</Text>
+          <Text>Add</Text>
         </UdaciButton>
-      </View>
+      </KeyboardAvoidingView>
     )
   }
 }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, TextInput, TouchableOpacity } from 'react-native'
+import { KeyboardAvoidingView, Text, TextInput, TouchableOpacity } from 'react-native'
 import { styles } from '../utils/styles'
 import { addDeck } from '../utils/api'
 import UdaciButton from './UdaciButton'
@@ -42,7 +42,11 @@ export default class AddDeck extends Component {
 
   render () {
     return (
-      <View style={styles.addContainer}>
+      <KeyboardAvoidingView
+        style={styles.addContainer}
+        behavior="padding"
+        enabled
+      >
         <Text style={styles.addDeckTitle}>
           What is the title of your new deck?
         </Text>
@@ -54,9 +58,9 @@ export default class AddDeck extends Component {
         <UdaciButton
           onPress={this.submit}
         >
-          <Text>Create</Text>
+          <Text>Create Deck</Text>
         </UdaciButton>
-      </View>
+      </KeyboardAvoidingView>
     )
   }
 }

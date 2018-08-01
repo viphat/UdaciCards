@@ -83,7 +83,7 @@ export default class Deck extends Component {
             btnStyle={{ backgroundColor: deck.questions.length === 0 ? gray : blue }}
             disabled={ deck.questions.length === 0 ? true : false }
           >
-            Start Quiz
+            Start a Quiz
           </UdaciButton>
         </View>
       </View>

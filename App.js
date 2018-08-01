@@ -8,6 +8,7 @@ import AddDeck from './components/AddDeck'
 import AddCard from './components/AddCard'
 import QuizView from './components/QuizView'
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation'
+import { setLocalNotification } from './utils/notifications.js'
 
 function UdaciStatusBar ( { backgroundColor, ...props }) {
   return (
@@ -82,6 +83,10 @@ const RootStack = createStackNavigator(
 )
 
 export default class App extends React.Component {
+  componentDidMount() {
+    setLocalNotification()
+  }
+
   render() {
     return (
       <View style={{ flex: 1 }}>

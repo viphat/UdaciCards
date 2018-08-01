@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import { styles } from '../utils/styles'
 import UdaciButton from './UdaciButton'
 import { red, green } from '../utils/colors'
+import { clearLocalNotification, setLocalNotification } from '../utils/notifications'
 
 export default class QuizView extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -20,9 +21,19 @@ export default class QuizView extends Component {
     incorrectAnswersCount: 0,
   }
 
-  toHome = () => {
+  restartQuiz = () => {
+    this.setState(() => ({
+      currentQuestionIndex: 0,
+      showAnswer: false,
+      isFinish: false,
+      correctAnswersCount: 0,
+      incorrectAnswersCount: 0,
+    }))
+  }
+
+  goBack = () => {
     const { navigation } = this.props
-    navigation.navigate('Home')
+    navigation.goBack()
   }
 
   answer = (result) => {
@@ -38,6 +49,10 @@ export default class QuizView extends Component {
     if (currentQuestionIndex + 1 === questions.length) {
       // Finish Quiz if it's the last question.
       this.setState(() => ({ isFinish: true }))
+
+      // Clear Notification
+      clearLocalNotification()
+        .then(setLocalNotification)
     } else {
       // Show Next Question Screen
       this.setState((previousState) => ({
@@ -100,10 +115,16 @@ export default class QuizView extends Component {
           </View>
           <View style={styles.quizButtons}>
             <UdaciButton
-              btnStyle={{backgroundColor: green}}
-              onPress={this.toHome}
+              btnStyle={{backgroundColor: red, marginBottom: 20}}
+              onPress={this.restartQuiz}
             >
-              <Text>Go Home</Text>
+              <Text>Restart Quiz</Text>
+            </UdaciButton>
+            <UdaciButton
+              btnStyle={{backgroundColor: green}}
+              onPress={this.goBack}
+            >
+              <Text>Go Back</Text>
             </UdaciButton>
           </View>
         </View>
@@ -117,17 +138,30 @@ export default class QuizView extends Component {
             { questions.length - (correctAnswersCount + incorrectAnswersCount) } / { questions.length }
           </Text>
         </View>
-        <View style={styles.quizContentContainer}>
-          <Text style={styles.quizContent}>{ currentQuestion.question }</Text>
-        </View>
-        <View style={styles.quizAnswerContainer}>
-          { showAnswer === false
-              ? <TouchableOpacity onPress={() => this.setState(() => ({ showAnswer: true }))}>
-                  <Text style={[styles.quizAnswer, { color: red }]}>Answer</Text>
-                </TouchableOpacity>
-              : <Text style={styles.quizAnswer}>{ currentQuestion.answer }</Text>
-          }
-        </View>
+        { showAnswer === false
+            ?
+              <View style={{flex: 2}}>
+                <View style={styles.quizContentContainer}>
+                  <Text style={styles.quizContent}>{ currentQuestion.question }</Text>
+                </View>
+                <View style={styles.quizLinkContainer}>
+                  <TouchableOpacity onPress={() => this.setState(() => ({ showAnswer: true }))}>
+                    <Text style={[styles.quizLink, { color: red }]}>Answer</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            :
+              <View style={{flex: 2}}>
+                <View style={styles.quizContentContainer}>
+                  <Text style={[styles.quizContent, { fontSize: 20 }]}>{ currentQuestion.answer }</Text>
+                </View>
+                <View style={styles.quizLinkContainer}>
+                  <TouchableOpacity onPress={() => this.setState(() => ({ showAnswer: false }))}>
+                    <Text style={[styles.quizLink, { color: red }]}>Question</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+        }
         <View style={styles.quizButtons}>
           <UdaciButton
             btnStyle={{backgroundColor: green, marginBottom: 20}}
