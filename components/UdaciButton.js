@@ -2,11 +2,15 @@ import React, { Component } from 'react'
 import { Platform, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { white, purple } from '../utils/colors'
 
-export default function UdaciButton({children, onPress, btnStyle = {}, txtStyle = {}}) {
+export default function UdaciButton({
+  children, onPress, btnStyle = {},
+  txtStyle = {}, ...props}) {
   return (
     <TouchableOpacity
       style={[Platform.OS === 'ios' ? styles.iosBtn : styles.androidBtn, btnStyle]}
-      onPress={onPress}>
+      onPress={onPress}
+      { ...props }
+    >
       <Text style={[styles.btnText, txtStyle]}>
         {children}
       </Text>

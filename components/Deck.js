@@ -4,7 +4,7 @@ import { getDeck } from '../utils/api'
 import { styles } from '../utils/styles'
 import { AppLoading } from 'expo'
 import UdaciButton from './UdaciButton'
-import { orange } from '../utils/colors'
+import { orange, gray, blue } from '../utils/colors'
 
 export default class Deck extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -24,9 +24,12 @@ export default class Deck extends Component {
     navigation.navigate('AddCard', { deckId: deckId })
   }
 
-  startQuiz () {
+  startQuiz = () => {
     // To be implemented
-    console.log('Start Quiz')
+    const { navigation } = this.props
+    const { deck } = this.state
+    console.log(deck)
+    navigation.navigate('QuizView', { deck: deck })
   }
 
   loadData (deckId) {
@@ -75,7 +78,11 @@ export default class Deck extends Component {
             onPress={this.addCard}>
             Add Card
           </UdaciButton>
-          <UdaciButton onPress={this.startQuiz}>
+          <UdaciButton
+            onPress={this.startQuiz}
+            btnStyle={{ backgroundColor: deck.questions.length === 0 ? gray : blue }}
+            disabled={ deck.questions.length === 0 ? true : false }
+          >
             Start Quiz
           </UdaciButton>
         </View>

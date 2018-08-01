@@ -6,6 +6,7 @@ import Deck from './components/Deck'
 import Decks from './components/Decks'
 import AddDeck from './components/AddDeck'
 import AddCard from './components/AddCard'
+import QuizView from './components/QuizView'
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation'
 
 function UdaciStatusBar ( { backgroundColor, ...props }) {
@@ -68,6 +69,10 @@ const RootStack = createStackNavigator(
     },
     AddCard: {
       screen: AddCard,
+      navigationOptions: stackNavigationOptions,
+    },
+    QuizView: {
+      screen: QuizView,
       navigationOptions: stackNavigationOptions,
     }
   },

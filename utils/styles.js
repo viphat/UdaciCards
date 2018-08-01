@@ -6,6 +6,41 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     flex: 1,
   },
+  quizContainer: {
+    justifyContent: 'space-around',
+    flex: 1,
+  },
+  quizCountContainer: {
+    flex: 1,
+    paddingLeft: 10,
+    marginTop: 20,
+  },
+  quizCountContent: {
+    fontSize: 24,
+    color: gray,
+  },
+  quizContentContainer: {
+    paddingLeft: 20,
+    paddingRight: 20,
+    marginBottom: 20,
+    justifyContent: 'flex-end',
+    flex: 2,
+  },
+  quizContent: {
+    fontSize: 36,
+  },
+  quizAnswerContainer: {
+    flex: 2,
+    paddingLeft: 20,
+    paddingRight: 20,
+    alignItems: 'center',
+  },
+  quizAnswer: {
+    fontSize: 28,
+  },
+  quizButtons: {
+    flex: 2,
+  },
   addContainer: {
     backgroundColor: white,
     justifyContent: 'space-around',

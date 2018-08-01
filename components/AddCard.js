@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-import { View, Text, TextInput, TouchableOpacity } from 'react-native'
+import { View, TextInput, Text } from 'react-native'
 import { styles } from '../utils/styles'
 import { addCard } from '../utils/api'
 import UdaciButton from './UdaciButton'
-import { NavigationActions } from 'react-navigation'
 
 export default class AddCard extends Component {
   static navigationOptions = ({ navigation }) => {
